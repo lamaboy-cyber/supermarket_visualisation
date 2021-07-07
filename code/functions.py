@@ -128,23 +128,29 @@ def simulate_supermarket(num_cust, duration):
     return df_steps
 
 
-def plot(df): 
+def plot(df, labels): 
 
-    fig = px.scatter(df, x = 'x',  y= 'section_int', width = 900, height = 600,
-                color = 'y', size = 'value_plot',
-            animation_frame = 'time', animation_group = 'index',
-                range_y = (-.9,7), range_x = (-.2,1.1), range_color = (-.5,1),
-                opacity = .9, template = 'plotly_dark', text="value")
+    if labels == True:
+        fig = px.scatter(df, x = 'x',  y= 'section_int', width = 900, height = 600,
+                        color = 'step', size = 'value_plot',
+                        animation_frame = 'time', animation_group = 'index',
+                        range_y = (-.9,7), range_x = (-.2,1.1), range_color = (-3,20),
+                        opacity = .9, template = 'plotly_dark', text="value")
+
+    else:
+        fig = px.scatter(df, x = 'x',  y= 'section_int', width = 900, height = 600,
+                        color = 'step', size = 'value_plot',
+                        animation_frame = 'time', animation_group = 'index',
+                        range_y = (-.9,7), range_x = (-.2,1.1), range_color = (-3,20),
+                        opacity = .9, template = 'plotly_dark')
+
 
     fig.update_traces(textposition='top center')
 
     for i, section in enumerate(sections_all):
-        fig.add_trace(go.Scatter(
-            x=[.5],
-            y=[i +.0],
-            mode="text",
-            name="Lines and Text",
-            text= (section.upper()) + 18 * '       -'))
+        fig.add_trace(go.Scatter(x=[.5], y=[i +.0],
+                                mode="text", name="Lines and Text",
+                                text= (section.upper()) + 18 * '       -'))
         
         
     fig.update_layout({'xaxis': {'zeroline': False,'showgrid': False, 'visible': False},
