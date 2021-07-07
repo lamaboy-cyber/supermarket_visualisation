@@ -67,13 +67,12 @@ def section_to_int(section):
             return i
 
 
-def simulate_supermarket():
+def simulate_supermarket(num_cust, duration):
 
-    num_cust = 150
     steps = 50
     step_count = []
 
-    s=Supermarket(num_cust)
+    s=Supermarket(num_cust, duration)
     s.add_customers()
 
     x = np.random.random_sample(num_cust)

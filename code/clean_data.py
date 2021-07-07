@@ -7,4 +7,4 @@ df = add_first_section_feature(df)
 
 df = df.set_index('index')
 
-df.to_csv('data/clean_test.csv')
+df.to_csv('../data/clean_test.csv')

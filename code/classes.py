@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-#from functions import get_transition_probs, get_initial_probs
 
 sections = ['checkout', 'dairy', 'drinks', 'fruit', 'spices']
 
@@ -31,7 +30,9 @@ def get_initial_probs(df):
     return initial_probs
 
 
-df = pd.read_csv('data/clean.csv')
+
+
+df = pd.read_csv('../data/clean.csv')
 transition_probs = get_transition_probs(df)
 initial_probs = get_initial_probs(df)
 
@@ -40,11 +41,11 @@ class Customer:
     
     """a single customer that moves through the supermarket in a MCMC simulation"""
    
-    def __init__(self, name):
+    def __init__(self, name, duration):
         self.name = name
         self.state = 'entry'
         self.value = 0
-        self.time = np.random.randint(500)
+        self.time = np.random.randint(duration)
 
 
     def __repr__(self):
@@ -74,14 +75,15 @@ class Supermarket:
     
     """place where the customers interact"""
     
-    def __init__(self,numb_customer):
-        self.numb_customer = numb_customer
+    def __init__(self,num_customers, duration):
+        self.num_customers = num_customers
         self.customers = []
+        self.duration = duration
     
     def add_customers(self):
-        for n in range(self.numb_customer):
+        for n in range(self.num_customers):
             # composition
-            self.customers.append(Customer(n+1))
+            self.customers.append(Customer(n+1, self.duration))
     def next_minute(self):
         for customer in self.customers:
             customer.next_minute()
